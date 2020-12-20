@@ -1,7 +1,10 @@
+# -*- coding:utf-8 -*-
 import os
 import random
 import argparse
 import string
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("action", type=str, help="create|remove")
@@ -41,6 +44,9 @@ def create():
     print("create")
     print("======")
 
+    create_log = open('create_hadoop.log','w',encoding='utf-8')
+    pwd_log = open('pwd_log.log','w',encoding='utf-8')
+
     hadoop_should_create_count = int(input("how many hadoop env to open? :"))
     slave_should_create_count = int(input("how many slave for each master? :"))
 
@@ -51,16 +57,33 @@ def create():
     for m_i in range(hadoop_should_create_count):
         master_name = master_name_prefix + str(m_i)
         master_user_name = master_name
-        master_user_pwd = get_random_string(8)
+        master_user_pwd = get_random_string(5)
+        pwd_log.write("%s\n"%master_user_name)
+        pwd_log.write("%s\n"%master_user_pwd)
+        pwd_log.write("\n")
+
         cmd('docker run --name %s --hostname %s -itd -p 22 -p 8088 -p 8080 -p 8000 -p 8888 -e"NAME"=%s -e"PASSWORD"=%s %s'%(master_name,master_name,master_user_name,master_user_pwd,base_image))
         for s_i in range(slave_should_create_count):
             slave_name = slave_name_prefix + '%d-%d'%(m_i,s_i)
             slave_user_name = slave_name
-            slave_user_pwd = get_random_string(8)
+            slave_user_pwd = get_random_string(5)
+            pwd_log.write("%s\n"%slave_user_name)
+            pwd_log.write("%s\n"%slave_user_pwd)
+            pwd_log.write("\n")
             cmd('docker run --name %s --hostname %s -itd -p 22 -e"NAME"=%s -e"PASSWORD"=%s %s'%(slave_name,slave_name,slave_user_name,slave_user_pwd,base_image))
+        pwd_log.write("\n")
     
     # show create
-    cmd('docker ps -f "name=%d_udic_hadoop_"'%random_prefix)
+    create_result = os.popen('docker ps -f "name=%d_udic_hadoop_"'%random_prefix).read().split("\n")
+    create_result.pop(0)
+    create_result.pop(-1)
+
+    for i,r in enumerate(create_result):
+        create_log.write(r+'\n')
+        print(slave_should_create_count+1,i+1)
+        if((i+1)%(slave_should_create_count+1)==0):
+            create_log.write('\n')
+
 
 
 if __name__ == "__main__":
