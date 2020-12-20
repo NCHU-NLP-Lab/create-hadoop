@@ -72,11 +72,11 @@ def create():
             cmd('docker run --name %s --hostname %s -itd -p 22 -e"NAME"=%s -e"PASSWORD"=%s %s'%(slave_name,slave_name,slave_user_name,slave_user_pwd,base_image))
     
     # show create
-    create_result = os.popen('docker ps -f "name=%d_udic_hadoop_"'%random_prefix).read().split("\n")
-    create_result.pop(0)
+    create_result = os.popen('docker ps --format "{{.Names}}: {{.Ports}}" -f "name=%d_udic_hadoop_"'%random_prefix).read().split("\n")
     create_result.pop(-1)
 
     for i,r in enumerate(create_result):
+        r = ' '.join(r.split())
         create_log.write(r+'\n')
         if((i+1)%(slave_should_create_count+1)==0):
             create_log.write('\n')
