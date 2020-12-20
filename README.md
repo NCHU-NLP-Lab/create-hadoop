@@ -12,6 +12,11 @@ $ docker build -t udic_hadoop .
 - `8088`: hadoop
 
 ## main.py
+執行完產生兩個`.log`file
+
+- `pwd_log.log`: 帳號與密碼
+- `create_hadoop.log`: container port
+
 ### Args:
 ```
 action: [create|remove]
