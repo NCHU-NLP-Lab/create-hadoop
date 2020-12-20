@@ -23,11 +23,13 @@ action: [create|remove]
 -d, --dry_run: 僅印出指令，不執行
 ```
 ### Create
+批量建立
 ```python
 python3 main.py create
 ```
 
 ### Remove
+批量刪除
 ```python
 python3 main.py remove
 ```
