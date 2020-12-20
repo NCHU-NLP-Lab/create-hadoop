@@ -33,7 +33,7 @@ def remove():
     print("remove")
     print("======")
     random_prefix = int(input("4 digts random_prefix:"))
-    docker_ids = popen('docker ps -q -f "name=%d_udic_hadoop_'%random_prefix)
+    docker_ids = popen('docker ps -q -f "name=%d_udic_hadoop_"'%random_prefix)
     # stop all
     for d_id in docker_ids: cmd('docker stop %s'%d_id)
     # rm all
@@ -71,7 +71,7 @@ def create():
             pwd_log.write("%s\n"%slave_user_pwd)
             pwd_log.write("\n")
             cmd('docker run --name %s --hostname %s -itd -p 22 -e"NAME"=%s -e"PASSWORD"=%s %s'%(slave_name,slave_name,slave_user_name,slave_user_pwd,base_image))
-        pwd_log.write("\n")
+        pwd_log.write("------\n")
     
     # show create
     create_result = os.popen('docker ps -f "name=%d_udic_hadoop_"'%random_prefix).read().split("\n")
@@ -80,10 +80,8 @@ def create():
 
     for i,r in enumerate(create_result):
         create_log.write(r+'\n')
-        print(slave_should_create_count+1,i+1)
         if((i+1)%(slave_should_create_count+1)==0):
             create_log.write('\n')
-
 
 
 if __name__ == "__main__":

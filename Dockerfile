@@ -24,9 +24,6 @@ RUN mkdir /var/run/sshd
 COPY script_files/docker_start.sh /docker_start.sh
 RUN chmod 777 /docker_start.sh
 
-# pytorch
-RUN pip install https://download.pytorch.org/whl/cu100/torch-1.3.0%2Bcu100-cp36-cp36m-linux_x86_64.whl
-
 # jupyter
 COPY config_files/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 
