@@ -4,8 +4,6 @@ import random
 import argparse
 import string
 
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument("action", type=str, help="create|remove")
 parser.add_argument('-d','--dry-run', action='store_true')
