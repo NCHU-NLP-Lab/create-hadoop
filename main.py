@@ -53,9 +53,10 @@ def create():
     master_name_prefix = '%d_udic_hadoop_master_'%random_prefix
     slave_name_prefix = '%d_udic_hadoop_slave_'%random_prefix
     for m_i in range(hadoop_should_create_count):
+        pwd_log.write("------------%d------------\n"%(m_i))
         master_name = master_name_prefix + str(m_i)
         master_user_name = master_name
-        master_user_pwd = get_random_string(5)
+        master_user_pwd = get_random_string(6)
         pwd_log.write("%s\n"%master_user_name)
         pwd_log.write("%s\n"%master_user_pwd)
         pwd_log.write("\n")
@@ -64,12 +65,11 @@ def create():
         for s_i in range(slave_should_create_count):
             slave_name = slave_name_prefix + '%d-%d'%(m_i,s_i)
             slave_user_name = slave_name
-            slave_user_pwd = get_random_string(5)
+            slave_user_pwd = get_random_string(6)
             pwd_log.write("%s\n"%slave_user_name)
             pwd_log.write("%s\n"%slave_user_pwd)
             pwd_log.write("\n")
             cmd('docker run --name %s --hostname %s -itd -p 22 -e"NAME"=%s -e"PASSWORD"=%s %s'%(slave_name,slave_name,slave_user_name,slave_user_pwd,base_image))
-        pwd_log.write("------\n")
     
     # show create
     create_result = os.popen('docker ps -f "name=%d_udic_hadoop_"'%random_prefix).read().split("\n")
