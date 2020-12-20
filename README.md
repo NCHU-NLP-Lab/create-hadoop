@@ -24,11 +24,11 @@ action: [create|remove]
 ```
 ### Create
 ```python
-python main.py create
+python3 main.py create
 ```
 
 ### Remove
 ```python
-python main.py remove
+python3 main.py remove
 ```
 > 需提供container批量建立時隨機產生的4位數字(container name prefix)
