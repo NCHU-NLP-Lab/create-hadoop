@@ -12,10 +12,19 @@ $ docker build -t udic_hadoop .
 - `8088`: hadoop
 
 ## main.py
-執行完產生兩個`.log`file
+執行完產生兩個`.log`file和一個`.csv`file
 
 - `pwd_log.log`: 帳號與密碼
 - `create_hadoop.log`: container port
+- `pwd.csv`: 帳號、密碼、port表格，方便直接複製。csv格式如下表:
+
+|index|host_type|account|password|ssh_port|web_port|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|0|master|8953_udic_hadoop_master_0|magxrr|49477|49474|
+|1|slave|8953_udic_hadoop_slave_0-0|inyupj|49478||
+|2|master|8953_udic_hadoop_master_1|khiwmd|49483|49480|
+|3|slave|8953_udic_hadoop_slave_1-0|gzlssf|49484||
+
 
 ### Args:
 ```
