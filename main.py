@@ -33,7 +33,8 @@ def remove():
     print("remove")
     print("======")
     random_prefix = int(input("4 digts random_prefix:"))
-    docker_ids = popen('docker ps -q -f "name=%d_udic_hadoop_"'%random_prefix)
+    # remove live or dead container
+    docker_ids = popen('docker ps -a -q -f "name=%d_udic_hadoop_"'%random_prefix)
     # stop all
     for d_id in docker_ids: cmd('docker stop %s'%d_id)
     # rm all
